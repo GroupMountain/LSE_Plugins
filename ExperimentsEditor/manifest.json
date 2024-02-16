@@ -1,0 +1,15 @@
+{
+    "entry": "ExperimentsEditor.js",
+    "name": "ExperimentsEditor",
+    "type": "lse-quickjs",
+    "author": "GroupMountain",
+    "version": "3.0.0",
+    "dependencies": [
+        {
+            "name": "legacy-script-engine-quickjs"
+        },
+        {
+            "name": "GMLIB-LegacyRemoteCallApi"
+        }
+    ]
+}
