@@ -1,3 +1,6 @@
+//TODO
+//修改悬浮字功能写完了但是好像又没写完
+//
 
 import { StaticFloatingText, DynamicFloatingText } from "./plugins/GMLIB-LegacyRemoteCallApi/GMLIB.js";
 
@@ -206,50 +209,53 @@ function change(pl, id) {
         let z = all[dt].mPosition.z.toFixed(1);
         let d = all[dt].mPosition.dimid.toFixed(0);
         let text = all[dt].mText;
+        let alls = all[dt];
         fm.setTitle("§l§1添加悬浮字");
-        //fm.addSwitch("动态悬浮字", 1)
         fm.addInput("悬浮字文本", all[dt].mText, all[dt].mText);
         fm.addInput("x", x, x);
         fm.addInput("y", y, y);
         fm.addInput("z", z, z);
         fm.addInput("DimId", d, d);
         if (id == 1) {
-            fm.addInput("动态刷新间隔");
+            fm.addInput("动态刷新间隔", all[dt].mUpdateRate.toFixed(0), all[dt].mUpdateRate.toFixed(0));
         }
         pl.sendForm(fm, (pl, dt) => {
             if (dt == null) {
                 return;
             };
             if (id == 1) {//动态
-                for (let i = 0; i < fts.length; index++) {
+                for (let i = 0; i < fts.length; i++) {
                     if (fts[i].text == text) {
+                        alls.setUpdateRate(dt[5]);
+                        alls.updateText(dt[0]);
                         fts.splice(i, 1);
                         fts.push({
                             "dynamic": true,
-                            "updateTime": dt[6],
-                            "text": dt[1],
+                            "updateTime": dt[5],
+                            "text": dt[0],
                             "pos": {
-                                "x": dt[2],
-                                "y": dt[3],
-                                "z": dt[4],
-                                "dim": dt[5]
+                                "x": dt[1],
+                                "y": dt[2],
+                                "z": dt[3],
+                                "dim": dt[4]
                             }
                         });
                     }
                 }
             }
             else {
-                for (let i = 0; i < fts.length; index++) {
+                for (let i = 0; i < fts.length; i++) {
                     if (fts[i].text == all[dt].mText) {
+                        alls.updateText(dt[0]);
                         fts.splice(i, 1);
                         fts.push({
                             "dynamic": false,
-                            "text": dt[1],
+                            "text": dt[0],
                             "pos": {
-                                "x": dt[2],
-                                "y": dt[3],
-                                "z": dt[4],
-                                "dim": dt[5]
+                                "x": dt[1],
+                                "y": dt[2],
+                                "z": dt[3],
+                                "dim": dt[4]
                             }
                         });
                     }
